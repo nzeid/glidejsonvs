@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Nader G. Zeid
+// Copyright (c) 2021 Nader G. Zeid
 //
 // This file is part of GlideJson.
 //
@@ -19,7 +19,7 @@
 GlideJson Parser::parse(const std::string &input) {
 #endif
 #ifdef GLIDE_JSON_PART_CSTRING
-GlideJson Parser::parse(const char * const &cInput, const size_t &size) {
+GlideJson Parser::parse(const char *cInput, size_t size) {
 #endif
   static const ParserInitializer parserInitializer;
   static const GlideJson gNull;
@@ -84,11 +84,12 @@ GlideJson Parser::parse(const char * const &cInput, const size_t &size) {
       case 15:
       case 16:
       case 17:
-        cOutput->content = cOutput->content->toNumber(cChar);
+        *cOutput = GlideJson::Number;
         if(decoded) {
           decoded->resize(decodedSize);
         }
         decoded = &(((Number *)(cOutput->content))->number);
+        *decoded = cChar;
         decodedSize = 1;
         decodedCapacity = GlideString::initialCapacity;
         decoded->resize(decodedCapacity);
